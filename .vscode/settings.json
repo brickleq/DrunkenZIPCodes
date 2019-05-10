@@ -1,0 +1,10 @@
+{
+    "editor.cursorStyle": "block",
+    "editor.wordWrap": "off",
+    "editor.autoClosingQuotes": "beforeWhitespace",
+    "editor.glyphMargin": false,
+    "editor.maxTokenizationLineLength": 200000000,
+    "editor.renderWhitespace": "boundary",
+    "editor.smoothScrolling": true,
+    "files.defaultLanguage": "python3"
+}

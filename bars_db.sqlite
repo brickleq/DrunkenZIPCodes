@@ -1,0 +1,57 @@
+use bars_db;
+
+create table bars_count(
+    zipcode varchar (5),
+    bar_count integer (100)
+);
+
+create table zip_info(
+    zipcode varchar (5),
+    primary_city varchar (100),
+    state varchar (2),
+    county varchar (100),
+    irs_est_population_2015 integer(100)
+);
+create table census(
+    zipcode varchar (5),
+    Population integer(20),
+    MedianAge decimal(10,2),
+    HouseholdIncome integer(20),
+    PerCapitaIncome integer(20)
+);
+
+create table bars_values(
+    zipcode varchar (5),
+	Population integer(20),
+    MedianAge decimal(10,2),
+    HouseholdIncome integer(20),
+    PerCapitaIncome integer(20),
+    bar_count integer(20),
+    Bars_per_Capita decimal(10,3),
+    Bars_per_Income decimal(10,3)
+);
+
+select * from bars_count
+select * from bars_values
+select * from census
+select * from zip_info
+
+/*Query to bring in the city and state for each zip code*/
+select
+	bars_count.zipcode, bars_count.bar_count,zip_info.primary_city, zip_info.state
+from
+	bars_count
+		inner join
+	zip_info on bars_count.zipcode=zip_info.zipcode;
+
+/*Query to analyse the sum of bars per state. Had to index the zipcode column in the tables, otherwise it looped through each of the records (bar 1 through 40K+ zip codes, etc) and it timed out. */
+select
+	zip_info.state,sum(bars_count.bar_count)
+from
+	bars_count
+		inner join
+	zip_info on bars_count.zipcode=zip_info.zipcode
+    group by zip_info.state;    
+
+  /*Query to count the total number of bars*/  
+ select sum(bar_count) from bars_count   
